@@ -27,22 +27,41 @@ public class PlayerMotor : MonoBehaviour
     [SerializeField]
     private KeyCode jumpKey = KeyCode.Space;
 
+    [SerializeField]
+    private bool useManualTick = true;
+
     private float verticalVelocity = 0.0f;  // 현재 프레임의 수직 속도.
 
     // Update is called once per frame
     void Update()
     {
-        if(controller == null)
+        if(useManualTick == false)
+        {
+            Tick(Time.deltaTime);
+        }
+    }
+
+    public void ManualTick(float deltaTime)
+    {
+        if(useManualTick == true)
+        {
+            Tick(deltaTime);
+        }
+    }
+
+    void Tick(float deltaTime)
+    {
+        if (controller == null)
         {
             controller = GetComponent<CharacterController>();
         }
 
-        if(controller == null)
+        if (controller == null)
         {
             return;
         }
 
-        if(inputReader == null)
+        if (inputReader == null)
         {
             return;
         }
@@ -59,7 +78,7 @@ public class PlayerMotor : MonoBehaviour
             verticalVelocity = groundedStickyVelocity;
         }
 
-        if(isGrounded == true && Input.GetKeyDown(jumpKey) == true)
+        if (isGrounded == true && Input.GetKeyDown(jumpKey) == true)
         {
             // 초기 점프 속도 계산.
             float effectiveGravity = gravity * gravityScale;

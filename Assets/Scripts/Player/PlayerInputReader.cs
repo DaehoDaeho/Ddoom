@@ -3,12 +3,29 @@ using UnityEngine.InputSystem;
 
 public class PlayerInputReader : MonoBehaviour
 {
+    public bool useManualTick = true;
     public bool useNewInputSystem = true;
     public Vector2 MoveInput { get; private set; }
     public bool LShftPressed { get; private set; }
 
     // Update is called once per frame
     void Update()
+    {
+        if(useManualTick == false)
+        {
+            ReadKeyboard();
+        }
+    }
+
+    public void ManualTick(float deltaTime)
+    {
+        if(useManualTick == true)
+        {
+            ReadKeyboard();
+        }
+    }
+
+    void ReadKeyboard()
     {
         float x = 0.0f;
         float y = 0.0f;
@@ -36,7 +53,7 @@ public class PlayerInputReader : MonoBehaviour
                 y += 1.0f;
             }
 
-            if(Keyboard.current.leftShiftKey.isPressed == true)
+            if (Keyboard.current.leftShiftKey.isPressed == true)
             {
                 LShftPressed = true;
             }
@@ -46,7 +63,7 @@ public class PlayerInputReader : MonoBehaviour
             x = Input.GetAxisRaw("Horizontal");
             y = Input.GetAxisRaw("Vertical");
 
-            if(Input.GetKey(KeyCode.LeftShift) == true)
+            if (Input.GetKey(KeyCode.LeftShift) == true)
             {
                 LShftPressed = true;
             }
