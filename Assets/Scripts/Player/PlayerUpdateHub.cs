@@ -16,9 +16,9 @@ public class PlayerUpdateHub : MonoBehaviour
 
     [SerializeField]
     private PlayerMotor playerMotor;
-
+    
     [SerializeField]
-    private PlayerLook playerLook;
+    private PlayerMouseLook mouseLook;
 
     // Update is called once per frame
     void Update()
@@ -49,9 +49,9 @@ public class PlayerUpdateHub : MonoBehaviour
             playerMotor.ManualTick(deltaTime);
         }
 
-        if(playerLook != null)
+        if(mouseLook != null)
         {
-            playerLook.ManualTick(deltaTime);
+            mouseLook.ManualTick(deltaTime);
         }
     }
 }

@@ -68,7 +68,17 @@ public class PlayerMotor : MonoBehaviour
 
         Vector2 input = inputReader.MoveInput;
 
-        Vector3 moveDir = new Vector3(input.x, 0.0f, input.y);
+        Vector3 right = transform.right;
+        Vector3 forward = transform.forward;
+
+        right.y = 0.0f;
+        forward.y = 0.0f;
+
+        right = right.normalized;
+        forward = forward.normalized;
+        
+        //Vector3 moveDir = new Vector3(input.x, 0.0f, input.y);
+        Vector3 moveDir = (right * input.x) + (forward * input.y);
         Vector3 horizontalVelocity = moveDir * moveSpeed;
 
         bool isGrounded = controller.isGrounded;
