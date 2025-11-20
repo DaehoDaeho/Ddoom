@@ -32,6 +32,8 @@ public class PlayerMotor : MonoBehaviour
 
     private float verticalVelocity = 0.0f;  // 현재 프레임의 수직 속도.
 
+    private float currentHorizontalSpeed = 0.0f;
+
     // Update is called once per frame
     void Update()
     {
@@ -102,6 +104,10 @@ public class PlayerMotor : MonoBehaviour
         Vector3 delta = velocity * Time.deltaTime;
 
         controller.Move(delta);
+
+        Vector3 ccVelocity = controller.velocity;
+        Vector3 horizontal = new Vector3(ccVelocity.x, 0.0f, ccVelocity.z);
+        currentHorizontalSpeed = horizontal.magnitude;
     }
 
     public void SetMoveSpeed(float newSpeed)
@@ -112,5 +118,10 @@ public class PlayerMotor : MonoBehaviour
     public void SetJumpHeight(float newHeight)
     {
         jumpHeight = newHeight;
+    }
+
+    public float GetHozizontalSpeed()
+    {
+        return currentHorizontalSpeed;
     }
 }
