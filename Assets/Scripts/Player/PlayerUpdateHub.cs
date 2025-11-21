@@ -20,6 +20,18 @@ public class PlayerUpdateHub : MonoBehaviour
     [SerializeField]
     private PlayerMouseLook mouseLook;
 
+    [SerializeField]
+    private WeaponInputReader weaponInputReader;
+
+    [SerializeField]
+    private WeaponController weaponController;
+
+    private void Awake()
+    {
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
+    }
+
     // Update is called once per frame
     void Update()
     {
@@ -52,6 +64,16 @@ public class PlayerUpdateHub : MonoBehaviour
         if(mouseLook != null)
         {
             mouseLook.ManualTick(deltaTime);
+        }
+
+        if (weaponInputReader != null)
+        {
+            weaponInputReader.ManualTick(deltaTime);
+        }
+
+        if (weaponController != null)
+        {
+            weaponController.ManualTick(deltaTime);
         }
     }
 }

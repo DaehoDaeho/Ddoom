@@ -119,6 +119,55 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1 &122838380
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 122838381}
+  - component: {fileID: 122838382}
+  m_Layer: 0
+  m_Name: DryGun
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &122838381
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 122838380}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1112940875}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &122838382
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 122838380}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7bb70237fd149d246a084f0192144359, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  magazineSize: 30
+  ammoInMagazine: 30
+  reserveAmmo: 90
+  fireIntervalSec: 0.1
+  reloadTimeSec: 1.5
 --- !u!1 &330585543
 GameObject:
   m_ObjectHideFlags: 0
@@ -720,6 +769,8 @@ GameObject:
   - component: {fileID: 1112940875}
   - component: {fileID: 1112940877}
   - component: {fileID: 1112940876}
+  - component: {fileID: 1112940879}
+  - component: {fileID: 1112940878}
   m_Layer: 0
   m_Name: WeaponAnchor
   m_TagString: Untagged
@@ -741,6 +792,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 907366999}
+  - {fileID: 122838381}
   m_Father: {fileID: 1613962863}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1112940876
@@ -779,6 +831,35 @@ MonoBehaviour:
   bobFrequency: 7
   bobSideAmplityde: 0.01
   bobSpeedScale: 1
+--- !u!114 &1112940878
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1112940874}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e6921d6a6a499a84a9915a9c8f304d53, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  inputReader: {fileID: 1112940879}
+  currentWeapon: {fileID: 122838382}
+  fireAsHold: 1
+  useManualTick: 1
+--- !u!114 &1112940879
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1112940874}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e3b65cf542c842741b5fb5d41f884926, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  useManualTick: 1
 --- !u!1 &1192078044
 GameObject:
   m_ObjectHideFlags: 0
@@ -894,6 +975,8 @@ MonoBehaviour:
   inputReader: {fileID: 1192078046}
   playerMotor: {fileID: 1192078047}
   mouseLook: {fileID: 1192078051}
+  weaponInputReader: {fileID: 1112940879}
+  weaponController: {fileID: 1112940878}
 --- !u!114 &1192078050
 MonoBehaviour:
   m_ObjectHideFlags: 0
