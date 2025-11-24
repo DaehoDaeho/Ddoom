@@ -17,6 +17,9 @@ public abstract class WeaponBase : MonoBehaviour
     [SerializeField]
     protected float reloadTimeSec = 1.5f;   // 재장전 시간.
 
+    [SerializeField]
+    protected bool useInfiniteAmmo = true;
+
     protected float fireCooldown = 0.0f;
     protected float reloadTimer = 0.0f;
     protected bool isReloading = false;
@@ -39,7 +42,11 @@ public abstract class WeaponBase : MonoBehaviour
             return false;
         }
 
-        --ammoInMagazine;
+        if (useInfiniteAmmo == false)
+        {
+            --ammoInMagazine;
+        }
+        
         fireCooldown = fireIntervalSec;
 
         Fire();
