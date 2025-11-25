@@ -82,7 +82,7 @@ public class HitscanWeapon : WeaponBase
             IDamageable damageable = hit.collider.GetComponentInParent<IDamageable>();
             if(damageable != null)
             {
-                damageable.TakeDamage(damage, hit.point, hit.normal);
+                damageable.TakeDamage(hit.collider.gameObject, damage, hit.point, hit.normal);
             }
 
             if(impactVfx != null)

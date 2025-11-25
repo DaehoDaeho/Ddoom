@@ -76,4 +76,9 @@ public class WeaponController : MonoBehaviour
             currentWeapon = weapon;
         }
     }
+
+    public WeaponBase GetCurrentWeapon()
+    {
+        return currentWeapon;
+    }
 }

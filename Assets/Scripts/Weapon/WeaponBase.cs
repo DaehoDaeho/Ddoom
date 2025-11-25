@@ -1,4 +1,5 @@
 using UnityEngine;
+using System;
 
 public abstract class WeaponBase : MonoBehaviour
 {
@@ -23,6 +24,8 @@ public abstract class WeaponBase : MonoBehaviour
     protected float fireCooldown = 0.0f;
     protected float reloadTimer = 0.0f;
     protected bool isReloading = false;
+
+    public event Action<int, int> OnAmmoChanged;
     
     public bool TryFire()
     {
@@ -50,6 +53,11 @@ public abstract class WeaponBase : MonoBehaviour
         fireCooldown = fireIntervalSec;
 
         Fire();
+
+        if(OnAmmoChanged != null)
+        {
+            OnAmmoChanged.Invoke(ammoInMagazine, reserveAmmo);
+        }
 
         return true;
     }
@@ -110,6 +118,11 @@ public abstract class WeaponBase : MonoBehaviour
         reserveAmmo -= need;
 
         OnReloadComplete();
+
+        if (OnAmmoChanged != null)
+        {
+            OnAmmoChanged.Invoke(ammoInMagazine, reserveAmmo);
+        }
     }
 
     protected abstract void Fire();
