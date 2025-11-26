@@ -1,5 +1,6 @@
 using UnityEngine;
 
+[DefaultExecutionOrder(1000)]
 /// <summary>
 /// 카메라 피벗(CameraPivot)의 로컬 회전에 작은 반동 각도를 더해 '뷰 킥'을 구현.
 /// 발사 시 AddKick(yaw, pitch)를 호출하고, LateUpdate에서 서서히 0으로 복귀.

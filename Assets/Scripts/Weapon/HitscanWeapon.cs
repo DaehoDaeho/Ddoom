@@ -8,7 +8,6 @@ public class HitscanWeapon : WeaponBase
     [SerializeField]
     private Transform firePoint;
 
-    //==========================================================
     [SerializeField]
     private GameObject owner;               // 가해자 루트(히트마커 소스)
     
@@ -20,7 +19,6 @@ public class HitscanWeapon : WeaponBase
     
     [SerializeField]
     private PlayerViewKick viewKick;        // 뷰 킥 트리거
-    //==========================================================
 
     [SerializeField]
     private float damage = 20.0f;
@@ -43,7 +41,6 @@ public class HitscanWeapon : WeaponBase
     [SerializeField]
     private ParticleSystem muzzleFlash;
 
-    //==============================================================
     [Header("Spread (degrees)")]
     [SerializeField]
     private float baseSpreadHip = 1.5f;     // 비조준 기본 퍼짐
@@ -87,8 +84,6 @@ public class HitscanWeapon : WeaponBase
         }
     }
 
-    //==============================================================
-
     void PlayMuzzleflash()
     {
         if(muzzleFlash != null)
@@ -107,12 +102,10 @@ public class HitscanWeapon : WeaponBase
 
     Vector3 ApplySpread(Vector3 dir, float angleDeg)
     {
-        //====================================================
         if (angleDeg <= 0.0f)
         {
             return dir.normalized;
         }
-        //====================================================
 
         float yaw = Random.Range(-angleDeg, angleDeg);
         float pitch = Random.Range(-angleDeg, angleDeg);
@@ -129,7 +122,6 @@ public class HitscanWeapon : WeaponBase
             return;
         }
 
-        //==========================================================
         // 1) 조준 여부
         bool aiming = inputReader != null && inputReader.IsAimPressed == true;
 
@@ -149,7 +141,6 @@ public class HitscanWeapon : WeaponBase
 
         // 4) 총 퍼짐 계산 = 기본 + 누적 + 이동
         float effectiveSpread = baseSpread + currentSpread + moveSpread;
-        //==========================================================
 
         Vector3 origin = cameraTransform.position;
         Vector3 direction = cameraTransform.forward;
@@ -182,7 +173,6 @@ public class HitscanWeapon : WeaponBase
             Debug.DrawLine(origin, hit.point, Color.red, 0.2f, false);
         }
 
-        //============================================================
         // 8) 발사 후 누적 퍼짐 증가(연속으로 쏘면 점점 퍼짐)
         currentSpread += spreadPerShot;
 
@@ -196,16 +186,13 @@ public class HitscanWeapon : WeaponBase
 
         // UI용 기록
         lastEffectiveSpread = effectiveSpread;
-        //============================================================
     }
 
-    //===========================================================
     /// <summary>
-    /// 현재 퍼짐(도)을 외부(UI)이 읽을 수 있게 공개.
+    /// 현재 퍼짐(도)을 외부(UI)에서 읽을 수 있게 공개.
     /// </summary>
     public float GetEffectiveSpreadDeg()
     {
         return lastEffectiveSpread;
     }
-    //===========================================================
 }

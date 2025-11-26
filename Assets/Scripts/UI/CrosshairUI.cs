@@ -17,6 +17,7 @@ public class CrosshairUI : MonoBehaviour
     
     [SerializeField]
     private RectTransform leftBar;
+
     [SerializeField]
     private RectTransform rightBar;
 

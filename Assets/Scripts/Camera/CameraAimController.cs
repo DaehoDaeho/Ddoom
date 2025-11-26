@@ -1,7 +1,7 @@
 using UnityEngine;
 
 /// <summary>
-/// 우클릭 조준 중일 때 카메라 FOV를 부드럽게 줄여서 줌 느낌 제공.
+/// 우클릭 조준 중일 때 카메라 FOV(Field Of View)를 부드럽게 줄여서 줌 느낌 제공.
 /// </summary>
 public class CameraAimController : MonoBehaviour
 {
