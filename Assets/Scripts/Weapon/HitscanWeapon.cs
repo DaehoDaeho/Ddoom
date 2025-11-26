@@ -8,6 +8,20 @@ public class HitscanWeapon : WeaponBase
     [SerializeField]
     private Transform firePoint;
 
+    //==========================================================
+    [SerializeField]
+    private GameObject owner;               // 가해자 루트(히트마커 소스)
+    
+    [SerializeField]
+    private PlayerMotor playerMotor;        // 이동 속도 보정용
+    
+    [SerializeField]
+    private WeaponInputReader inputReader;  // 조준 여부 참조
+    
+    [SerializeField]
+    private PlayerViewKick viewKick;        // 뷰 킥 트리거
+    //==========================================================
+
     [SerializeField]
     private float damage = 20.0f;
 
@@ -29,6 +43,52 @@ public class HitscanWeapon : WeaponBase
     [SerializeField]
     private ParticleSystem muzzleFlash;
 
+    //==============================================================
+    [Header("Spread (degrees)")]
+    [SerializeField]
+    private float baseSpreadHip = 1.5f;     // 비조준 기본 퍼짐
+    
+    [SerializeField]
+    private float baseSpreadAds = 0.4f;     // 조준 기본 퍼짐
+    
+    [SerializeField]
+    private float spreadPerShot = 0.3f;     // 발사 시 누적되는 퍼짐
+    
+    [SerializeField]
+    private float spreadDecayPerSec = 2.5f; // 초당 감소(가만히 있을 때)
+    
+    [SerializeField]
+    private float moveSpreadScale = 1.0f;   // 이동 속도에 따른 가중치(정규화된 속도 × 이 값)
+
+    [Header("View Kick (degrees)")]
+    [SerializeField]
+    private float pitchKickPerShotHip = 1.0f; // 비조준 뷰 킥 크기
+    
+    [SerializeField]
+    private float pitchKickPerShotAds = 0.4f; // 조준 뷰 킥 크기
+    
+    [SerializeField]
+    private float yawKickRandom = 0.3f;       // 좌우로 약간 랜덤 킥
+
+    // 내부 상태
+    private float currentSpread = 0.0f;        // 누적 퍼짐(발사로 증가, 시간으로 감소)
+    private float lastEffectiveSpread = 0.0f;  // UI 등을 위한 최근 퍼짐 기록
+
+    private void Update()
+    {
+        // 퍼짐 감쇠(가만히 있을수록 차분해짐)
+        if (currentSpread > 0.0f)
+        {
+            currentSpread -= spreadDecayPerSec * Time.deltaTime;
+            if (currentSpread < 0.0f)
+            {
+                currentSpread = 0.0f;
+            }
+        }
+    }
+
+    //==============================================================
+
     void PlayMuzzleflash()
     {
         if(muzzleFlash != null)
@@ -47,6 +107,13 @@ public class HitscanWeapon : WeaponBase
 
     Vector3 ApplySpread(Vector3 dir, float angleDeg)
     {
+        //====================================================
+        if (angleDeg <= 0.0f)
+        {
+            return dir.normalized;
+        }
+        //====================================================
+
         float yaw = Random.Range(-angleDeg, angleDeg);
         float pitch = Random.Range(-angleDeg, angleDeg);
 
@@ -61,6 +128,28 @@ public class HitscanWeapon : WeaponBase
         {
             return;
         }
+
+        //==========================================================
+        // 1) 조준 여부
+        bool aiming = inputReader != null && inputReader.IsAimPressed == true;
+
+        // 2) 기본 퍼짐(조준이면 더 작게)
+        float baseSpread = aiming == true ? baseSpreadAds : baseSpreadHip;
+
+        // 3) 이동 보정(수평 속도를 0~1로 정규화해서 가중)
+        float moveFactor = 0.0f; // 정규화된 이동 척도
+        if (playerMotor != null)
+        {
+            float speed = playerMotor.GetHorizontalSpeed();        // m/s
+            float normalizeBy = 5.0f;                              // 5 m/s 기준 정규화
+            moveFactor = Mathf.Clamp01(speed / normalizeBy);       // 0~1
+        }
+
+        float moveSpread = moveFactor * moveSpreadScale;           // 이동으로 늘어나는 퍼짐
+
+        // 4) 총 퍼짐 계산 = 기본 + 누적 + 이동
+        float effectiveSpread = baseSpread + currentSpread + moveSpread;
+        //==========================================================
 
         Vector3 origin = cameraTransform.position;
         Vector3 direction = cameraTransform.forward;
@@ -82,7 +171,7 @@ public class HitscanWeapon : WeaponBase
             IDamageable damageable = hit.collider.GetComponentInParent<IDamageable>();
             if(damageable != null)
             {
-                damageable.TakeDamage(hit.collider.gameObject, damage, hit.point, hit.normal);
+                damageable.TakeDamage(owner, damage, hit.point, hit.normal);
             }
 
             if(impactVfx != null)
@@ -92,5 +181,31 @@ public class HitscanWeapon : WeaponBase
 
             Debug.DrawLine(origin, hit.point, Color.red, 0.2f, false);
         }
+
+        //============================================================
+        // 8) 발사 후 누적 퍼짐 증가(연속으로 쏘면 점점 퍼짐)
+        currentSpread += spreadPerShot;
+
+        // 9) 뷰 킥(조준 중이면 더 작게)
+        if (viewKick != null)
+        {
+            float pitch = aiming == true ? pitchKickPerShotAds : pitchKickPerShotHip; // 위로 톡
+            float yaw = Random.Range(-yawKickRandom, yawKickRandom);                   // 좌우로 아주 조금
+            viewKick.AddKick(yaw, pitch);
+        }
+
+        // UI용 기록
+        lastEffectiveSpread = effectiveSpread;
+        //============================================================
     }
+
+    //===========================================================
+    /// <summary>
+    /// 현재 퍼짐(도)을 외부(UI)이 읽을 수 있게 공개.
+    /// </summary>
+    public float GetEffectiveSpreadDeg()
+    {
+        return lastEffectiveSpread;
+    }
+    //===========================================================
 }

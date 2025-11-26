@@ -10,7 +10,7 @@ public class HitMarkerUI : MonoBehaviour
     private GameObject playerOwner;
 
     [SerializeField]
-    private float showTime = 0.0f;
+    private float showTime = 0.08f;
 
     private float timer;
 

@@ -97,7 +97,7 @@ public class WeaponAnchorController : MonoBehaviour
         if(playerMotor != null)
         {
             //speedScale = bobSpeedScale;
-            speedScale = playerMotor.GetHozizontalSpeed() == 0.0f ? 0.25f : playerMotor.GetHozizontalSpeed();
+            speedScale = playerMotor.GetHorizontalSpeed() == 0.0f ? 0.25f : playerMotor.GetHorizontalSpeed();
         }
 
         if(speedScale <= 0.0f || bobAmplitude <= 0.0f)

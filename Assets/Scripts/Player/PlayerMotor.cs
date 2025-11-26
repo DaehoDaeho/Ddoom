@@ -120,7 +120,7 @@ public class PlayerMotor : MonoBehaviour
         jumpHeight = newHeight;
     }
 
-    public float GetHozizontalSpeed()
+    public float GetHorizontalSpeed()
     {
         return currentHorizontalSpeed;
     }

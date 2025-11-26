@@ -64,10 +64,10 @@ public class Health : MonoBehaviour, IDamageable
             return;
         }
 
-        if(ignoreFriendlyFire == true && IsFriendlyFire(info.source) == true)
-        {
-            return;
-        }
+        //if(ignoreFriendlyFire == true && IsFriendlyFire(info.source) == true)
+        //{
+        //    return;
+        //}
 
         float oldHp = currentHp;
         currentHp -= info.amount;
@@ -129,13 +129,14 @@ public class Health : MonoBehaviour, IDamageable
             return false;
         }
 
-        TeamMember srcTeam = source.GetComponent<TeamMember>();
+        //TeamMember srcTeam = source.GetComponent<TeamMember>();
         
-        if(srcTeam == null || team == null)
-        {
-            return false;
-        }
+        //if(srcTeam == null || team == null)
+        //{
+        //    return false;
+        //}
 
-        return srcTeam.GetTeamId() == team.GetTeamId();
+        //return srcTeam.GetTeamId() == team.GetTeamId();
+        return false;
     }
 }
