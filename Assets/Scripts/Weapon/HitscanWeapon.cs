@@ -71,6 +71,15 @@ public class HitscanWeapon : WeaponBase
     private float currentSpread = 0.0f;        // 누적 퍼짐(발사로 증가, 시간으로 감소)
     private float lastEffectiveSpread = 0.0f;  // UI 등을 위한 최근 퍼짐 기록
 
+    //=============================================================
+    [SerializeField] private GunAudio gunAudio;
+    [SerializeField] private BulletTracerSpawner tracerSpawner;
+    [SerializeField] private RecoilPatternCurve recoilPattern;
+
+    // 내부 상태: 몇 번째 탄을 쐈는지(연사 중 패턴 샘플용)
+    private int shotsFiredInBurst = 0;
+    //=============================================================
+
     private void Update()
     {
         // 퍼짐 감쇠(가만히 있을수록 차분해짐)
@@ -155,9 +164,9 @@ public class HitscanWeapon : WeaponBase
 
         bool didHit = Physics.Raycast(ray, out hit, maxDistance, hitMask, QueryTriggerInteraction.Ignore);
 
-        PlayMuzzleflash();
+        PlayMuzzleflash();        
 
-        if(didHit == true)
+        if (didHit == true)
         {
             IDamageable damageable = hit.collider.GetComponentInParent<IDamageable>();
             if(damageable != null)
@@ -173,6 +182,33 @@ public class HitscanWeapon : WeaponBase
             Debug.DrawLine(origin, hit.point, Color.red, 0.2f, false);
         }
 
+        //====================================================
+        // 1) 총소리
+        if (gunAudio != null)
+        {
+            gunAudio.PlayFire();
+        }
+
+        // 2) 트레이서(카메라 원점 -> 히트 지점 또는 사거리 끝)
+        Vector3 tracerStart = firePoint != null ? firePoint.position : cameraTransform.position;
+        Vector3 tracerEnd;
+
+        if (didHit == true)
+        {
+            tracerEnd = hit.point;
+        }
+        else
+        {
+            tracerEnd = origin + direction.normalized * maxDistance;
+        }
+
+        if (tracerSpawner != null)
+        {
+            tracerSpawner.SpawnTracer(tracerStart, tracerEnd);
+        }
+
+        //====================================================
+
         // 8) 발사 후 누적 퍼짐 증가(연속으로 쏘면 점점 퍼짐)
         currentSpread += spreadPerShot;
 
@@ -183,6 +219,22 @@ public class HitscanWeapon : WeaponBase
             float yaw = Random.Range(-yawKickRandom, yawKickRandom);                   // 좌우로 아주 조금
             viewKick.AddKick(yaw, pitch);
         }
+
+        //============================================================
+        // 반동 패턴(뷰 킥에 덧셈)
+        // 발사 카운트 증가(연사 중이면 누적)
+        shotsFiredInBurst += 1;
+
+        if (recoilPattern != null && viewKick != null)
+        {
+            Vector2 kick = recoilPattern.SampleKickForShot(shotsFiredInBurst);
+            // 패턴 값은 아주 작게. 필요하면 스케일 상수 곱하기.
+            float yawKick = kick.x;
+            float pitchKick = kick.y;
+
+            viewKick.AddKick(yawKick, pitchKick);
+        }
+        //============================================================
 
         // UI용 기록
         lastEffectiveSpread = effectiveSpread;
@@ -195,4 +247,11 @@ public class HitscanWeapon : WeaponBase
     {
         return lastEffectiveSpread;
     }
+
+    //=============================================================
+    public void ResetBurstCount()
+    {
+        shotsFiredInBurst = 0;
+    }
+    //=============================================================
 }

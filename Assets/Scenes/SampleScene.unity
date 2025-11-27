@@ -2330,6 +2330,9 @@ MonoBehaviour:
   pitchKickPerShotHip: 1
   pitchKickPerShotAds: 0.4
   yawKickRandom: 0.3
+  gunAudio: {fileID: 0}
+  tracerSpawner: {fileID: 0}
+  recoilPattern: {fileID: 11400000, guid: 4df900ddd15c28d4a8e2f32e25e5b9c9, type: 2}
 --- !u!1 &1588778320
 GameObject:
   m_ObjectHideFlags: 0
