@@ -14,6 +14,7 @@ public class GunAudio : MonoBehaviour
     [SerializeField] private float volume = 1.0f;           // 기본 볼륨
     [SerializeField] private float pitchRandomRange = 0.05f; // ±범위(작게)
 
+    [SerializeField]
     private AudioSource audioSource;
 
     private void Awake()
