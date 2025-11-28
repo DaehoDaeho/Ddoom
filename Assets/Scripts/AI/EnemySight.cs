@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using JetBrains.Annotations;
+using UnityEngine;
 
 /// <summary>
 /// [설치] 적 루트 또는 '눈' 역할 오브젝트에 부착(권장: 적 루트에 부착 후 eyeTransform 지정)
@@ -18,6 +19,15 @@ public class EnemySight : MonoBehaviour
     [SerializeField] private float memoryTime = 2.0f; // 마지막 시야 보존 시간(초)
     private Vector3 lastSeenPosition;                 // 마지막으로 본 월드 좌표
     private float memoryTimer = 0.0f;                 // 남은 기억 시간(초)
+
+    private void Awake()
+    {
+        GameObject go = GameObject.FindGameObjectWithTag("Player");
+        if(go != null)
+        {
+            target = go.transform;
+        }
+    }
 
     /// <summary>
     /// 매 프레임 호출하여 대상이 '보이는지' 판정한다.
