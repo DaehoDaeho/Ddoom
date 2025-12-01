@@ -14,9 +14,8 @@ public class GunAudio : MonoBehaviour
     [SerializeField] private float volume = 1.0f;           // 기본 볼륨
     [SerializeField] private float pitchRandomRange = 0.05f; // ±범위(작게)
 
-    //===========================================================
     [SerializeField] private float gunshotLoudness = 2.5f;   // 총성 크기(발소리보다 큼)
-    //===========================================================
+    [SerializeField] private float reloadLoudness = 1.0f;   // 총성 크기(발소리보다 큼)
 
     [SerializeField]
     private AudioSource audioSource;
@@ -32,6 +31,12 @@ public class GunAudio : MonoBehaviour
     /// </summary>
     public void PlayFire()
     {
+        if (NoiseEventBus.Instance != null)
+        {
+            Vector3 pos = transform.position;
+            NoiseEventBus.Instance.RaiseNoise(pos, gunshotLoudness);
+        }
+
         if (fireClip == null)
         {
             return;
@@ -39,14 +44,6 @@ public class GunAudio : MonoBehaviour
 
         audioSource.pitch = 1.0f + Random.Range(-pitchRandomRange, pitchRandomRange);
         audioSource.PlayOneShot(fireClip, volume);
-
-        //========================================================
-        if (NoiseEventBus.Instance != null)
-        {
-            Vector3 pos = transform.position;
-            NoiseEventBus.Instance.RaiseNoise(pos, gunshotLoudness);
-        }
-        //========================================================
     }
 
     /// <summary>
@@ -54,6 +51,12 @@ public class GunAudio : MonoBehaviour
     /// </summary>
     public void PlayReload()
     {
+        //if (NoiseEventBus.Instance != null)
+        //{
+        //    Vector3 pos = transform.position;
+        //    NoiseEventBus.Instance.RaiseNoise(pos, reloadLoudness);
+        //}
+
         if (reloadClip == null)
         {
             return;

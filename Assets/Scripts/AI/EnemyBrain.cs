@@ -62,6 +62,15 @@ public class EnemyBrain : MonoBehaviour
         {
             modelRoot = transform;
         }
+
+        if(playerHealth == null)
+        {
+            GameObject go = GameObject.FindGameObjectWithTag("Player");
+            if(go != null)
+            {
+                playerHealth = go.GetComponent<Health>();
+            }
+        }
     }
 
     private void Update()
