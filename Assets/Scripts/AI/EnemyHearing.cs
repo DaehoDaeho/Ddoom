@@ -5,6 +5,7 @@ using UnityEngine;
 /// [핵심] NoiseEventBus를 구독해 소리를 들으면 '마지막 들은 위치'와 '기억 시간'을 갱신.
 /// [필수 연결] NoiseEventBus(씬에 1개)
 /// </summary>
+[DefaultExecutionOrder(500)]
 public class EnemyHearing : MonoBehaviour
 {
     [SerializeField] private float hearingRadius = 10.0f;  // 기본 청취 반경(발소리 기준)
