@@ -941,6 +941,8 @@ GameObject:
   - component: {fileID: 384708586}
   - component: {fileID: 384708585}
   - component: {fileID: 384708584}
+  - component: {fileID: 384708588}
+  - component: {fileID: 384708587}
   m_Layer: 9
   m_Name: Enemy
   m_TagString: Untagged
@@ -1154,7 +1156,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 384708573}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: cf616c0baf6a69e478372748711b91d1, type: 3}
   m_Name: 
@@ -1206,6 +1208,43 @@ MonoBehaviour:
   obstructionMask:
     serializedVersion: 2
     m_Bits: 1024
+--- !u!114 &384708587
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 384708573}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f58153105722c64489bf8dc3ecda82b5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  context: {fileID: 384708588}
+--- !u!114 &384708588
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 384708573}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 939d746dda37ab6449f653258c111cf4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  agent: {fileID: 384708582}
+  sight: {fileID: 384708583}
+  hearing: {fileID: 384708586}
+  patrol: {fileID: 384708585}
+  modelRoot: {fileID: 384708578}
+  playerHealth: {fileID: 0}
+  attackRange: 2
+  attackIntervalSec: 1
+  damagePerHit: 10
+  faceTurnSpeedDeg: 360
+  reachThreshold: 0.8
+  suspicionTime: 3
 --- !u!1 &410087039
 GameObject:
   m_ObjectHideFlags: 0

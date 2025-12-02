@@ -79,31 +79,58 @@ public class EnemyContext : MonoBehaviour
     }
 
     /// <summary>NavMeshAgent 반환.</summary>
-    public NavMeshAgent GetAgent() { return agent; }
+    public NavMeshAgent GetAgent()
+    {
+        return agent;
+    }
 
     /// <summary>시야 컴포넌트.</summary>
-    public EnemySight GetSight() { return sight; }
+    public EnemySight GetSight()
+    {
+        return sight;
+    }
 
     /// <summary>청각 컴포넌트.</summary>
-    public EnemyHearing GetHearing() { return hearing; }
+    public EnemyHearing GetHearing()
+    {
+        return hearing;
+    }
 
     /// <summary>순찰 경로.</summary>
-    public PatrolRoute GetPatrol() { return patrol; }
+    public PatrolRoute GetPatrol()
+    {
+        return patrol;
+    }
 
     /// <summary>플레이어 체력.</summary>
-    public Health GetPlayerHealth() { return playerHealth; }
+    public Health GetPlayerHealth()
+    {
+        return playerHealth;
+    }
 
     /// <summary>공격 사거리.</summary>
-    public float GetAttackRange() { return attackRange; }
+    public float GetAttackRange()
+    {
+        return attackRange;
+    }
 
     /// <summary>의심 상태 유지 시간.</summary>
-    public float GetSuspicionTime() { return suspicionTime; }
+    public float GetSuspicionTime()
+    {
+        return suspicionTime;
+    }
 
     /// <summary>의심 도달 판정 거리.</summary>
-    public float GetReachThreshold() { return reachThreshold; }
+    public float GetReachThreshold()
+    {
+        return reachThreshold;
+    }
 
     /// <summary>바라보기 회전 속도(도/초).</summary>
-    public float GetFaceTurnSpeedDeg() { return faceTurnSpeedDeg; }
+    public float GetFaceTurnSpeedDeg()
+    {
+        return faceTurnSpeedDeg;
+    }
 
     /// <summary>
     /// 지정 지점으로 이동 시작(금지 영역/네비 보정 포함) + 바라보기 보정.
