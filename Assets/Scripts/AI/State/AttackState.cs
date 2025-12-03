@@ -5,6 +5,10 @@ using UnityEngine;
 /// </summary>
 public class AttackState : BaseEnemyState
 {
+    //==============================================================
+    private bool requestedThisCycle = false; // 중복 요청 방지
+    //==============================================================
+
     public override void Enter(EnemyContext ctx)
     {
         // 첫 프레임에 바라보기 보정
@@ -13,6 +17,10 @@ public class AttackState : BaseEnemyState
         {
             ctx.FaceTarget(sight.GetLastSeenPosition());
         }
+
+        //=======================================================
+        requestedThisCycle = false;
+        //=======================================================
     }
 
     public override void Tick(EnemyContext ctx, EnemyStateMachine fsm)
@@ -34,6 +42,11 @@ public class AttackState : BaseEnemyState
         {
             // 시야를 잃으면 의심으로 하향
             fsm.ChangeState(new SuspiciousState());
+
+            //==================================================
+            requestedThisCycle = false;
+            //==================================================
+
             return;
         }
 
@@ -41,11 +54,31 @@ public class AttackState : BaseEnemyState
         {
             // 사거리 밖이면 추적
             fsm.ChangeState(new ChaseState());
+
+            //==================================================
+            requestedThisCycle = false;
+            //==================================================
+
             return;
         }
 
         // 사거리 안: 바라보고 공격 시도
         ctx.FaceTarget(pos);
         ctx.TryAttack(pos);
+
+        //======================================================
+        // 공격 쿨다운은 EnemyContext.TryAttack가 관리했지만,
+        // 오늘은 '애니메이션 → 이벤트' 흐름이므로 애니메이션만 요청.
+        if (requestedThisCycle == false)
+        {
+            EnemyAttackSwitcher sw = ctx.GetComponent<EnemyAttackSwitcher>();
+            if (sw != null)
+            {
+                sw.RequestAttackAnimation(); // ★ 공격 애니메이션 시작 신호
+            }
+
+            requestedThisCycle = true;
+        }
+        //======================================================
     }
 }
