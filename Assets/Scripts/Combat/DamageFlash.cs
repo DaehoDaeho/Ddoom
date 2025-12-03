@@ -43,20 +43,20 @@ public class DamageFlash : MonoBehaviour
 
     private void LateUpdate()
     {
-        if(timer > 0.0f)
-        {
-            timer -= Time.deltaTime;
-            float t = Mathf.Clamp01(timer / flashDuration);
+        //if(timer > 0.0f)
+        //{
+        //    timer -= Time.deltaTime;
+        //    float t = Mathf.Clamp01(timer / flashDuration);
 
-            rend.GetPropertyBlock(mpb);
-            mpb.SetColor("_EmissionColor", flashColor * flashIntensity * t);
-            rend.SetPropertyBlock(mpb);
-        }
-        else
-        {
-            rend.GetPropertyBlock(mpb);
-            mpb.SetColor("_EmissionColor", Color.black);
-            rend.SetPropertyBlock(mpb);
-        }
+        //    rend.GetPropertyBlock(mpb);
+        //    mpb.SetColor("_EmissionColor", flashColor * flashIntensity * t);
+        //    rend.SetPropertyBlock(mpb);
+        //}
+        //else
+        //{
+        //    rend.GetPropertyBlock(mpb);
+        //    mpb.SetColor("_EmissionColor", Color.black);
+        //    rend.SetPropertyBlock(mpb);
+        //}
     }
 }

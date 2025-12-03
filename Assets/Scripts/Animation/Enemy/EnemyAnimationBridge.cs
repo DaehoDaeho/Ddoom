@@ -74,7 +74,7 @@ public class EnemyAnimationBridge : MonoBehaviour
 
         if (animator != null)
         {
-            animator.SetBool(paramIsSuspicious, suspicious);
+            //animator.SetBool(paramIsSuspicious, suspicious);
         }
     }
 

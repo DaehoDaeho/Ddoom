@@ -17,6 +17,7 @@ public class MeleeAttackHitbox : MonoBehaviour
     /// </summary>
     public void TryHitOnce()
     {
+        Debug.Log("Enter TryHitOnce");
         Collider[] cols = Physics.OverlapSphere(transform.position, radius, targetMask, QueryTriggerInteraction.Ignore);
 
         for (int i = 0; i < cols.Length; ++i)
