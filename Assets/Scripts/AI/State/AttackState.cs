@@ -1,24 +1,15 @@
-using UnityEngine;
+ï»¿using UnityEngine;
 
 /// <summary>
-/// [»óÅÂ] °ø°İ: »ç°Å¸® ¾È¿¡¼­ ÁÖ±âÀûÀ¸·Î ÇÇÇØ¸¦ ÁØ´Ù.
+/// [ìƒíƒœ] ê³µê²©: ì‚¬ê±°ë¦¬ ì•ˆì—ì„œ ì£¼ê¸°ì ìœ¼ë¡œ í”¼í•´ë¥¼ ì¤€ë‹¤.
 /// </summary>
 public class AttackState : BaseEnemyState
 {
-    private bool requestedThisCycle = false; // Áßº¹ ¿äÃ» ¹æÁö
-
-    //=========================================================
-    private float telegraphDuration = 0.3f;  // ¿¹°í ½Ã°£(ÃÊ)
-    private float orbitT = 0.0f;             // ´ë±â È¸Àü¿ë Å¸ÀÌ¸Ó
-
-    private AttackTelegraph telegraph;
-    private EnemyEngageAgent engage;
-    private EnemyAttackSwitcher switcher;
-    //=========================================================
-
+    private bool requestedThisCycle = false; // ì¤‘ë³µ ìš”ì²­ ë°©ì§€
+    
     public override void Enter(EnemyContext ctx)
     {
-        // Ã¹ ÇÁ·¹ÀÓ¿¡ ¹Ù¶óº¸±â º¸Á¤
+        // ì²« í”„ë ˆì„ì— ë°”ë¼ë³´ê¸° ë³´ì •
         EnemySight sight = ctx.GetSight();
         if (sight != null)
         {
@@ -26,29 +17,6 @@ public class AttackState : BaseEnemyState
         }
 
         requestedThisCycle = false;
-
-        //==================================================
-        if (telegraph == null)
-        {
-            telegraph = ctx.GetComponent<AttackTelegraph>();
-        }
-
-        if (engage == null)
-        {
-            engage = ctx.GetComponent<EnemyEngageAgent>();
-        }
-
-        if (switcher == null)
-        {
-            switcher = ctx.GetComponent<EnemyAttackSwitcher>();
-        }
-
-        // ÅÚ·¹±×·¡ÇÁ°¡ ÄÑÁ® ÀÖ¾ú´Ù¸é ¾ÈÀüÇÏ°Ô ÃÊ±âÈ­
-        if (telegraph != null && telegraph.IsPlaying() == true)
-        {
-            telegraph.Cancel();
-        }
-        //==================================================
     }
 
     public override void Tick(EnemyContext ctx, EnemyStateMachine fsm)
@@ -68,14 +36,7 @@ public class AttackState : BaseEnemyState
 
         if (canSee == false)
         {
-            //===================================================
-            if (telegraph != null && telegraph.IsPlaying() == true)
-            {
-                telegraph.Cancel();
-            }
-            //===================================================
-
-            // ½Ã¾ß¸¦ ÀÒÀ¸¸é ÀÇ½ÉÀ¸·Î ÇÏÇâ
+            // ì‹œì•¼ë¥¼ ìƒìœ¼ë©´ ì˜ì‹¬ìœ¼ë¡œ í•˜í–¥
             fsm.ChangeState(new SuspiciousState());
 
             requestedThisCycle = false;
@@ -85,14 +46,7 @@ public class AttackState : BaseEnemyState
 
         if (dist > ctx.GetAttackRange())
         {
-            //===================================================
-            if (telegraph != null && telegraph.IsPlaying() == true)
-            {
-                telegraph.Cancel();
-            }
-            //===================================================
-
-            // »ç°Å¸® ¹ÛÀÌ¸é ÃßÀû
+            // ì‚¬ê±°ë¦¬ ë°–ì´ë©´ ì¶”ì 
             fsm.ChangeState(new ChaseState());
 
             requestedThisCycle = false;
@@ -100,67 +54,21 @@ public class AttackState : BaseEnemyState
             return;
         }
 
-        //=======================================================
-        // ÅäÅ« Ã¼Å©: ¾øÀ¸¸é ´ë±â/ÀÚ¸® Àâ±â
-        if (engage != null && engage.HasPermission() == false)
-        {
-            orbitT += Time.deltaTime;
-            Vector3 orbit = engage.GetOrbitPointAround(pos, orbitT);
-            ctx.MoveTo(orbit);
-            return;
-        }
-        //=======================================================
-
-        // »ç°Å¸® ¾È: ¹Ù¶óº¸°í °ø°İ ½Ãµµ
+        // ì‚¬ê±°ë¦¬ ì•ˆ: ë°”ë¼ë³´ê³  ê³µê²© ì‹œë„
         ctx.FaceTarget(pos);
         ctx.TryAttack(pos);
 
-        // °ø°İ Äğ´Ù¿îÀº EnemyContext.TryAttack°¡ °ü¸®ÇßÁö¸¸,
-        // ¿À´ÃÀº '¾Ö´Ï¸ŞÀÌ¼Ç -> ÀÌº¥Æ®' Èå¸§ÀÌ¹Ç·Î ¾Ö´Ï¸ŞÀÌ¼Ç¸¸ ¿äÃ».
+        // ê³µê²© ì¿¨ë‹¤ìš´ì€ EnemyContext.TryAttackê°€ ê´€ë¦¬í–ˆì§€ë§Œ,
+        // ì˜¤ëŠ˜ì€ 'ì• ë‹ˆë©”ì´ì…˜ -> ì´ë²¤íŠ¸' íë¦„ì´ë¯€ë¡œ ì• ë‹ˆë©”ì´ì…˜ë§Œ ìš”ì²­.
         if (requestedThisCycle == false)
         {
-            //========================================================
-            // ÅÚ·¹±×·¡ÇÁ ½ÃÀÛ
-            if (telegraph != null)
+            EnemyAttackSwitcher sw = ctx.GetComponent<EnemyAttackSwitcher>();
+            if (sw != null)
             {
-                telegraph.BeginTelegraph(telegraphDuration);
+                sw.RequestAttackAnimation();
             }
 
-            requestedThisCycle = true;
-            return;
-            //========================================================
+            //requestedThisCycle = true;
         }
-
-        //==========================================================
-        // ÅÚ·¹±×·¡ÇÁ ¿Ï·áµÇ¾úÀ¸¸é °ø°İ ¾Ö´Ï ¿äÃ»
-        if (telegraph != null)
-        {
-            if (telegraph.IsPlaying() == true)
-            {
-                return; // ¾ÆÁ÷ ¿¹°í Áß
-            }
-
-            if (telegraph.IsCompleted() == true)
-            {
-                if (switcher != null)
-                {
-                    switcher.RequestAttackAnimation(); // µ¥¹ÌÁö´Â ¾Ö´Ï ÀÌº¥Æ®¿¡¼­ Ã³¸®
-                }
-
-                // ´ÙÀ½ »çÀÌÅ¬ ÁØºñ(ÇÊ¿ä½Ã °£°İ Å¸ÀÌ¸Ó¸¦ Ãß°¡ÇØµµ µÊ)
-                requestedThisCycle = false;
-                return;
-            }
-        }
-        else
-        {
-            // ÅÚ·¹±×·¡ÇÁ°¡ ¾ø´Ù¸é ¹Ù·Î ¾Ö´Ï ½ÃÀÛ(ºñ±ÇÀåÀÌÁö¸¸ ¾ÈÀü Ã³¸®)
-            if (switcher != null)
-            {
-                switcher.RequestAttackAnimation();
-            }
-            requestedThisCycle = false;
-        }
-        //==========================================================
     }
 }

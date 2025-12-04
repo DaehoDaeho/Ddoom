@@ -11,6 +11,7 @@ public class EnemyStateMachine : MonoBehaviour
     [SerializeField] private EnemyContext context;
 
     private IEnemyState currentState;
+    [SerializeField] private string strCurrentState;
 
     private void Reset()
     {
@@ -55,5 +56,7 @@ public class EnemyStateMachine : MonoBehaviour
         {
             currentState.Enter(context);
         }
+
+        strCurrentState = currentState.ToString();
     }
 }

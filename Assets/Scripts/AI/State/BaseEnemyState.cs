@@ -38,6 +38,7 @@ public abstract class BaseEnemyState : IEnemyState
             if (dist <= ctx.GetAttackRange())
             {
                 fsm.ChangeState(new AttackState());
+                ctx.Stop();
                 return true;
             }
             else
