@@ -90,14 +90,5 @@ public class PlayerStateMachine : MonoBehaviour
                     break;
                 }
         }
-
-        // 상태 실행  이동은 이동 상태에서만 호출
-        //if (state == State.Move)
-        //{
-        //    if (motor != null)
-        //    {
-        //        motor.Move(moveInput);                        // 기존 모듈 호출  시그니처가 다르면 이 한 줄만 교체
-        //    }
-        //}
     }
 }

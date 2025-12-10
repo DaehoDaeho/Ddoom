@@ -124,11 +124,4 @@ public class PlayerMotor : MonoBehaviour
     {
         return currentHorizontalSpeed;
     }
-
-    //=============================================
-    public void Move(Vector2 moveInput)
-    {
-        
-    }
-    //=============================================
 }
