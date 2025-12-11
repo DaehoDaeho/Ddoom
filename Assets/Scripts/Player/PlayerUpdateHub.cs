@@ -66,14 +66,14 @@ public class PlayerUpdateHub : MonoBehaviour
             mouseLook.ManualTick(deltaTime);
         }
 
-        if (weaponInputReader != null)
-        {
-            weaponInputReader.ManualTick(deltaTime);
-        }
+        //if (weaponInputReader != null)
+        //{
+        //    weaponInputReader.ManualTick(deltaTime);
+        //}
 
-        if (weaponController != null)
-        {
-            weaponController.ManualTick(deltaTime);
-        }
+        //if (weaponController != null)
+        //{
+        //    weaponController.ManualTick(deltaTime);
+        //}
     }
 }

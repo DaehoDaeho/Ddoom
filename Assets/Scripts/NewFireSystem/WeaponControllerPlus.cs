@@ -173,6 +173,8 @@ public class WeaponControllerPlus : MonoBehaviour
         isReloading = true;
         reloadFinishTime = Time.time + data.reloadTime;
 
+        Debug.Log("재장전 시작");
+
         // 사건 통지
         NotifyReloadStarted();
     }
@@ -196,6 +198,8 @@ public class WeaponControllerPlus : MonoBehaviour
         // 예비에서 탄창으로 이동
         mag += need;
         reserve -= need;
+
+        Debug.Log("재장전 완료");
 
         // 사건 통지
         NotifyReloadFinished();
