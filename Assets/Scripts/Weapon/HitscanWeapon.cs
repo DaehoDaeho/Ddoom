@@ -158,12 +158,13 @@ public class HitscanWeapon : WeaponBase
             direction = ApplySpread(direction, spreadAngleDeg);
         }
 
-        Ray ray = new Ray(origin, direction);
+        //Ray ray = new Ray(origin, direction);
         RaycastHit hit;
 
-        bool didHit = Physics.Raycast(ray, out hit, maxDistance, hitMask, QueryTriggerInteraction.Ignore);
+        //bool didHit = Physics.Raycast(ray, out hit, maxDistance, hitMask, QueryTriggerInteraction.Ignore);
+        bool didHit = PhysicsRaycasterHelper.TryBulletRay(Camera.main, maxDistance, out hit);
 
-        PlayMuzzleflash();        
+        PlayMuzzleflash();
 
         if (didHit == true)
         {

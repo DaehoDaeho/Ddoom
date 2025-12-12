@@ -64,10 +64,11 @@ public class EnemySight : MonoBehaviour
         }
 
         // 3) 시야선(사이에 벽이 있는지) — 벽이 없을 때만 보임
-        Ray ray = new Ray(eyeTransform.position, dir);
+        //Ray ray = new Ray(eyeTransform.position, dir);
         RaycastHit hit;
-        bool blocked = Physics.Raycast(ray, out hit, distance, obstructionMask, QueryTriggerInteraction.Ignore);
-
+        //bool blocked = Physics.Raycast(ray, out hit, distance, obstructionMask, QueryTriggerInteraction.Ignore);
+        bool blocked = PhysicsRaycasterHelper.TrySightRay(eyeTransform.position, dir, distance, out hit);
+        
         if (blocked == true)
         {
             // 벽/지형 등에 가려졌다면 보이지 않음

@@ -29,20 +29,21 @@ public class InteractRaycaster : MonoBehaviour
         }
 
         // 카메라 위치와 정면으로 레이를 생성
-        Ray ray = new Ray(
-            viewCamera.transform.position,
-            viewCamera.transform.forward
-        );
+        //Ray ray = new Ray(
+        //    viewCamera.transform.position,
+        //    viewCamera.transform.forward
+        //);
 
         // 충돌 검사 수행  트리거는 무시
         RaycastHit hit;                                      // 충돌 결과 저장 변수
-        bool didHit = Physics.Raycast(
-            ray,
-            out hit,
-            maxDistance,
-            hitMask,
-            QueryTriggerInteraction.Ignore
-        );
+        //bool didHit = Physics.Raycast(
+        //    ray,
+        //    out hit,
+        //    maxDistance,
+        //    hitMask,
+        //    QueryTriggerInteraction.Ignore
+        //);
+        bool didHit = PhysicsRaycasterHelper.TryInteractRay(Camera.main, maxDistance, out hit);
 
         // 적중했다면 부모 계층에서 인터페이스 구현 검색
         if (didHit == true)
