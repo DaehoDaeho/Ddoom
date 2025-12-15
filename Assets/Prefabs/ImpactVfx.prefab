@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 2822583901566095319}
   - component: {fileID: 1432995705019343269}
   - component: {fileID: 2534450102173181109}
+  - component: {fileID: 8112486939357885830}
   m_Layer: 0
   m_Name: ImpactVfx
   m_TagString: Untagged
@@ -4833,3 +4834,16 @@ ParticleSystemRenderer:
   m_MeshWeighting2: 1
   m_MeshWeighting3: 1
   m_MaskInteraction: 0
+--- !u!114 &8112486939357885830
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8434959848813123968}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b4c0436e19281da46b1e727c4b573787, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  autoReturnSeconds: 2

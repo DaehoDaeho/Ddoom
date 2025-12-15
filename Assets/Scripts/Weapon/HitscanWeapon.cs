@@ -206,10 +206,10 @@ public class HitscanWeapon : WeaponBase
             tracerEnd = origin + direction.normalized * maxDistance;
         }
 
-        if (tracerSpawner != null)
-        {
-            tracerSpawner.SpawnTracer(tracerStart, tracerEnd);
-        }
+        //if (tracerSpawner != null)
+        //{
+        //    tracerSpawner.SpawnTracer(tracerStart, tracerEnd);
+        //}
 
         // 8) 발사 후 누적 퍼짐 증가(연속으로 쏘면 점점 퍼짐)
         currentSpread += spreadPerShot;

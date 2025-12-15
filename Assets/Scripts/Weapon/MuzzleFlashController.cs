@@ -13,6 +13,14 @@ public class MuzzleFlashController : MonoBehaviour
 
     private float lightTimer;
 
+    private void Awake()
+    {
+        if(muzzleLight != null)
+        {
+            muzzleLight.enabled = false;
+        }
+    }
+
     private void Update()
     {
         if (muzzleLight != null)

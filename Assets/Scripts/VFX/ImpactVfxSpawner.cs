@@ -3,23 +3,23 @@ using UnityEngine;
 public class ImpactVfxSpawner : MonoBehaviour
 {
     [SerializeField]
-    private GameObject defaultImpactPrefab;
+    private float impactLifetime = 1.0f;
 
     [SerializeField]
-    private float impactLifetime = 1.0f;
+    private SimplePool pool;
+
+    [SerializeField]
+    private SimplePool poolDecal;
 
     public void SpawnImpact(Vector3 position, Vector3 normal)
     {
-        if(defaultImpactPrefab == null)
+        if(pool == null)
         {
             return;
         }
 
         Quaternion rot = Quaternion.LookRotation(normal, Vector3.up);
-        GameObject go = Instantiate(defaultImpactPrefab, position, rot);
-        if(go != null)
-        {
-            Destroy(go, impactLifetime);
-        }
+        PooledObject go = pool.Rent(position, rot, impactLifetime);
+        PooledObject go2 = poolDecal.Rent(position, rot, impactLifetime);
     }
 }
