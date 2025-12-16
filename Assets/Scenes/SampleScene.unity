@@ -4964,6 +4964,7 @@ GameObject:
   - component: {fileID: 1192078053}
   - component: {fileID: 1192078055}
   - component: {fileID: 1192078054}
+  - component: {fileID: 1192078056}
   m_Layer: 7
   m_Name: Player
   m_TagString: Player
@@ -5163,6 +5164,25 @@ MonoBehaviour:
   hitMask:
     serializedVersion: 2
     m_Bits: 2048
+--- !u!114 &1192078056
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1192078044}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2c0cbfbee117bbc429ee436fd655ce30, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  viewCamera: {fileID: 330585545}
+  grenadePrefab: {fileID: 2727444379604167164, guid: 3f39a8d2656f8504488347891a977a55, type: 3}
+  throwSpeed: 15
+  upwardBonus: 2.5
+  maxGrenades: 3
+  ignoreGrenadeCount: 1
+  throwKey: 103
 --- !u!1 &1201053626
 GameObject:
   m_ObjectHideFlags: 0
