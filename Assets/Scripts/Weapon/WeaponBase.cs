@@ -21,6 +21,9 @@ public abstract class WeaponBase : MonoBehaviour
     [SerializeField]
     protected bool useInfiniteAmmo = true;
 
+    [SerializeField]
+    protected Animator animator;
+
     protected float fireCooldown = 0.0f;
     protected float reloadTimer = 0.0f;
     protected bool isReloading = false;
@@ -45,10 +48,7 @@ public abstract class WeaponBase : MonoBehaviour
             return false;
         }
 
-        if (useInfiniteAmmo == false)
-        {
-            --ammoInMagazine;
-        }
+        --ammoInMagazine;
         
         fireCooldown = fireIntervalSec;
 
@@ -74,7 +74,7 @@ public abstract class WeaponBase : MonoBehaviour
             return false;
         }
 
-        if(reserveAmmo <= 0)
+        if(useInfiniteAmmo == false && reserveAmmo <= 0)
         {
             return false;
         }
@@ -82,6 +82,12 @@ public abstract class WeaponBase : MonoBehaviour
         isReloading = true;
         reloadTimer = reloadTimeSec;
         OnReloadStart();
+
+        if(animator != null)
+        {
+            animator.SetTrigger("Reload");
+        }
+
         return true;
     }
 

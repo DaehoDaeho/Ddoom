@@ -20,6 +20,6 @@ public class ImpactVfxSpawner : MonoBehaviour
 
         Quaternion rot = Quaternion.LookRotation(normal, Vector3.up);
         PooledObject go = pool.Rent(position, rot, impactLifetime);
-        PooledObject go2 = poolDecal.Rent(position, rot, impactLifetime);
+        PooledObject go2 = poolDecal.Rent(position+normal*0.01f, rot, impactLifetime);
     }
 }

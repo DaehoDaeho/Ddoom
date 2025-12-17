@@ -30,6 +30,9 @@ public class PlayerMotor : MonoBehaviour
     [SerializeField]
     private bool useManualTick = true;
 
+    [SerializeField]
+    private Animator animator;
+
     private float verticalVelocity = 0.0f;  // 현재 프레임의 수직 속도.
 
     private float currentHorizontalSpeed = 0.0f;
@@ -108,6 +111,12 @@ public class PlayerMotor : MonoBehaviour
         Vector3 ccVelocity = controller.velocity;
         Vector3 horizontal = new Vector3(ccVelocity.x, 0.0f, ccVelocity.z);
         currentHorizontalSpeed = horizontal.magnitude;
+
+        bool move = horizontalVelocity.sqrMagnitude > 0.0001f ? true : false;
+        if(animator != null)
+        {
+            animator.SetBool("Move", move);
+        }
     }
 
     public void SetMoveSpeed(float newSpeed)
