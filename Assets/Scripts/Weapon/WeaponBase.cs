@@ -1,7 +1,7 @@
 using UnityEngine;
 using System;
 
-public abstract class WeaponBase : MonoBehaviour
+public abstract class WeaponBase : MonoBehaviour, IAmmoProvider
 {
     [SerializeField]
     protected int magazineSize = 30;    // ÇÑ ÅºÃ¢ÀÇ ÀåÅº ¼ö.
@@ -166,5 +166,35 @@ public abstract class WeaponBase : MonoBehaviour
     public float GetFireCooldown()
     {
         return fireCooldown;
+    }
+
+    public int GetInMag()
+    {
+        return ammoInMagazine;
+    }
+
+    public int GetReserve()
+    {
+        return reserveAmmo;
+    }
+    
+    public void SetInMag(int amount)
+    {
+        ammoInMagazine = amount;
+
+        if(OnAmmoChanged != null)
+        {
+            OnAmmoChanged.Invoke(ammoInMagazine, reserveAmmo);
+        }
+    }
+
+    public void SetReserve(int amount)
+    {
+        reserveAmmo = amount;
+
+        if (OnAmmoChanged != null)
+        {
+            OnAmmoChanged.Invoke(ammoInMagazine, reserveAmmo);
+        }
     }
 }

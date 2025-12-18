@@ -1,7 +1,7 @@
 using UnityEngine;
 using System;
 
-public class Health : MonoBehaviour, IDamageable
+public class Health : MonoBehaviour, IDamageable, IHealthProvider
 {
     [SerializeField]
     private float maxHp = 100.0f;
@@ -19,6 +19,7 @@ public class Health : MonoBehaviour, IDamageable
 
     public event Action<DamageInfo, float, float> OnDamaged;
     public event Action OnDied;
+    public event Action<float, float> OnChangedHP;
 
     private TeamMember team;
 
@@ -75,6 +76,11 @@ public class Health : MonoBehaviour, IDamageable
         if(OnDamaged != null)
         {
             OnDamaged.Invoke(info, oldHp, currentHp);
+        }
+
+        if(OnChangedHP != null)
+        {
+            OnChangedHP.Invoke(currentHp, maxHp);
         }
 
         if(info.source != null && DamageEventBus.Instance != null)
@@ -138,5 +144,25 @@ public class Health : MonoBehaviour, IDamageable
 
         //return srcTeam.GetTeamId() == team.GetTeamId();
         return false;
+    }
+
+    public float GetCurrent()
+    {
+        return currentHp;
+    }
+
+    public float GetMax()
+    {
+        return maxHp;
+    }
+
+    public void SetCurrent(float hp)
+    {
+        currentHp = hp;
+
+        if(OnChangedHP != null)
+        {
+            OnChangedHP.Invoke(currentHp, maxHp);
+        }
     }
 }
