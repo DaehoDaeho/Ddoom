@@ -2606,55 +2606,6 @@ Transform:
   - {fileID: 1319470248}
   m_Father: {fileID: 1999909139}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &472223095
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 472223097}
-  - component: {fileID: 472223096}
-  m_Layer: 0
-  m_Name: GameServices
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &472223096
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 472223095}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 689056e92ef475a48acf7ad215d76d79, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  playerRoot: {fileID: 1192078045}
-  healthProviderObj: {fileID: 1192078046}
-  ammoProviderObj: {fileID: 1525284013}
-  saveKey: 286
-  restartKey: 290
---- !u!4 &472223097
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 472223095}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &485038912
 GameObject:
   m_ObjectHideFlags: 0
@@ -5098,6 +5049,7 @@ GameObject:
   - component: {fileID: 1192078054}
   - component: {fileID: 1192078056}
   - component: {fileID: 1192078057}
+  - component: {fileID: 1192078058}
   m_Layer: 7
   m_Name: Player
   m_TagString: Player
@@ -5333,6 +5285,23 @@ MonoBehaviour:
   currentHp: 100
   ignoreFriendlyFire: 1
   invulnerableTimeOnHit: 0.2
+--- !u!114 &1192078058
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1192078044}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 689056e92ef475a48acf7ad215d76d79, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerRoot: {fileID: 1192078045}
+  healthProviderObj: {fileID: 1192078057}
+  ammoProviderObj: {fileID: 1525284013}
+  saveKey: 286
+  restartKey: 290
 --- !u!1 &1201053626
 GameObject:
   m_ObjectHideFlags: 0
@@ -11150,5 +11119,4 @@ SceneRoots:
   - {fileID: 433810778}
   - {fileID: 1273211512}
   - {fileID: 214692179}
-  - {fileID: 472223097}
   - {fileID: 882069329}
