@@ -137,4 +137,9 @@ public class DayNightController : MonoBehaviour
             runtimeSkybox.SetFloat(skyboxExposureProperty, exposure);
         }
     }
+
+    public float GetDaysFactor01()
+    {
+        return ComputeDayFactor01(currentHour);
+    }
 }

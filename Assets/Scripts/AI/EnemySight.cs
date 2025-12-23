@@ -20,6 +20,9 @@ public class EnemySight : MonoBehaviour
     private Vector3 lastSeenPosition;                 // 마지막으로 본 월드 좌표
     private float memoryTimer = 0.0f;                 // 남은 기억 시간(초)
 
+    private float baseViewDistance; // 기본 발견 가능 거리.
+    private bool baseCached;    // 기본값 저장 여부.
+
     private void Awake()
     {
         GameObject go = GameObject.FindGameObjectWithTag("Player");
@@ -149,5 +152,32 @@ public class EnemySight : MonoBehaviour
         Gizmos.color = Color.cyan;
         Gizmos.DrawRay(eyeTransform.position, leftDir * viewRadius);
         Gizmos.DrawRay(eyeTransform.position, rightDir * viewRadius);
+    }
+
+    void CachedBaseIfNeeded()
+    {
+        if(baseCached == true)
+        {
+            return;
+        }
+
+        baseViewDistance = viewRadius;
+        baseCached = true;
+    }
+
+    /// <summary>
+    /// 낮과 밤에 따른 배율을 적용해 발견 가능 거리를 갱신한다.
+    /// </summary>
+    /// <param name="multiplier">배율 값</param>
+    public void ApplySightMultiplier(float multiplier)
+    {
+        CachedBaseIfNeeded();
+
+        if(multiplier < 0.1f)
+        {
+            multiplier = 0.1f;
+        }
+
+        viewRadius = baseViewDistance * multiplier;
     }
 }
