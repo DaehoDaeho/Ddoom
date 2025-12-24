@@ -53,4 +53,9 @@ public class DayNightSightTuner : MonoBehaviour
             }
         }
     }
+
+    public float GetCurrentMultiplier()
+    {
+        return lastAppliedMultiplier;
+    }
 }

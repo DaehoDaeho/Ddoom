@@ -23,6 +23,8 @@ public class Health : MonoBehaviour, IDamageable, IHealthProvider
 
     private TeamMember team;
 
+    private bool invincible = false;    // 무적 상태인지 여부.
+
     void Awake()
     {
         currentHp = maxHp;
@@ -69,6 +71,12 @@ public class Health : MonoBehaviour, IDamageable, IHealthProvider
         //{
         //    return;
         //}
+
+        // 무적 상태면 대미지 적용을 하지 않는다.
+        if (invincible == true)
+        {
+            return;
+        }
 
         float oldHp = currentHp;
         currentHp -= info.amount;
@@ -164,5 +172,26 @@ public class Health : MonoBehaviour, IDamageable, IHealthProvider
         {
             OnChangedHP.Invoke(currentHp, maxHp);
         }
+    }
+
+    /// <summary>
+    /// hp를 가득 채우기.
+    /// </summary>
+    public void SetHPToMax()
+    {
+        currentHp = maxHp;
+
+        if (OnChangedHP != null)
+        {
+            OnChangedHP.Invoke(currentHp, maxHp);
+        }
+    }
+
+    /// <summary>
+    /// 무적 상태 토글.
+    /// </summary>
+    public void ToggleInvincible()
+    {
+        invincible = !invincible;
     }
 }

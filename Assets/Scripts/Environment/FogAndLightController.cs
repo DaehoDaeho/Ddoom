@@ -60,13 +60,13 @@ public class FogAndLightController : MonoBehaviour
 
         ApplyRenderSettings();
 
-        if(textInfo != null)
-        {
-            StringBuilder sb = new StringBuilder();
-            sb.Append("FogColor:").Append(currentFogColor).Append("\n").Append("FogDensity: ").Append(currentFogDensity).Append("\n").Append("SunIntensity: ").
-                Append(currentSunIntensity).Append("\n").Append("AmbientIntensity: ").Append(currentAmbientIntensity);
-            textInfo.text = sb.ToString();
-        }
+        //if(textInfo != null)
+        //{
+        //    StringBuilder sb = new StringBuilder();
+        //    sb.Append("FogColor:").Append(currentFogColor).Append("\n").Append("FogDensity: ").Append(currentFogDensity).Append("\n").Append("SunIntensity: ").
+        //        Append(currentSunIntensity).Append("\n").Append("AmbientIntensity: ").Append(currentAmbientIntensity);
+        //    textInfo.text = sb.ToString();
+        //}
     }
 
     /// <summary>
@@ -106,5 +106,15 @@ public class FogAndLightController : MonoBehaviour
         {
             sunLight.intensity = currentSunIntensity;
         }
+    }
+
+    public float GetCurrentFogDensity()
+    {
+        return currentFogDensity;
+    }
+
+    public float GetCurrentSunIntensity()
+    {
+        return currentSunIntensity;
     }
 }
