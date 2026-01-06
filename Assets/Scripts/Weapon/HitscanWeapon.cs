@@ -96,14 +96,18 @@ public class HitscanWeapon : WeaponBase
     {
         if(muzzleFlash != null)
         {
-            if(muzzleFlash.isPlaying == false)
+            ParticleSystem[] particles = muzzleFlash.GetComponentsInChildren<ParticleSystem>();
+            for(int i=0; i<particles.Length; ++i)
             {
-                muzzleFlash.Play();
-            }
-            else
-            {
-                muzzleFlash.Stop();
-                muzzleFlash.Play();
+                if (particles[i].isPlaying == false)
+                {
+                    particles[i].Play();
+                }
+                else
+                {
+                    particles[i].Stop();
+                    particles[i].Play();
+                }
             }
         }
     }
