@@ -4860,7 +4860,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!108 &1154023201
 Light:
   m_ObjectHideFlags: 0
@@ -7122,6 +7122,10 @@ PrefabInstance:
     - target: {fileID: 101500707313532659, guid: 1ab56230907cf6e4a9106f9480adc897, type: 3}
       propertyPath: m_Name
       value: MuzzleFlash
+      objectReference: {fileID: 0}
+    - target: {fileID: 101500707313532659, guid: 1ab56230907cf6e4a9106f9480adc897, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1918261013166757308, guid: 1ab56230907cf6e4a9106f9480adc897, type: 3}
       propertyPath: ShapeModule.radius.value
